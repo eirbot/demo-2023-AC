@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node Python App</title>
+</head>
+<body>
+  <button onclick="executePythonScript()">Run Python Script</button>
+
+  <script>
+    function executePythonScript() {
+      fetch('/execute-script', { method: 'POST' })
+        .then(response => {
+          console.log('Python script executed successfully!');
+        })
+        .catch(error => {
+          console.error('An error occurred while executing the Python script:', error);
+        });
+    }
+  </script>
+</body>
+</html>
