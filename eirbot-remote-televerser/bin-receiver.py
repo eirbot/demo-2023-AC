@@ -1,10 +1,29 @@
 import socket
+import shutil
+import os
+import glob
 
 IP = '192.168.43.200'
 PORT = 4455
 ADDR = (IP, PORT)
 SIZE = 1024
 FORMAT = "utf-8"
+
+def copy_file_to_usb(usb_path, file_pattern, destination_path):
+    # Detect the USB port where the file is located
+    usb_files = glob.glob(usb_path + file_pattern)
+
+    # Display a list of files found on the USB and allow the user to select one
+    print("USB files:")
+    for i, file in enumerate(usb_files):
+        print(f"{i + 1}. {file}")
+
+    selection = int(input("Enter the number of the file you want to copy: ")) - 1
+    selected_file = usb_files[selection]
+
+    # Copy the file to the destination
+    shutil.copy(selected_file, destination_path)
+    print("File copied successfully!")
 
 #receive the file
 def main():
@@ -21,7 +40,12 @@ def main():
     print(f"[{addr}] {data}")
     file.close()
     client.close()
+    server.close()
     
 if __name__ == "__main__":
-    main()
+    usb_path = '/media/eirbot/NODE_F446RE3/'  # Specify the USB path
+    file_pattern = 'test.bin'  # Specify the file pattern or extension
+    destination_path = '/home/demo-2023-AC/eirbot-remote-televerser/'  # Specify the destination directory
     
+    main()
+    copy_file_to_usb(destination_path, file_pattern, usb_path)
