@@ -1,8 +1,8 @@
 import socket
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 4455
-ADDR = (IP, PORT)
+PORT = 4456
+ADDR = ('192.168.43.200', PORT)
 SIZE = 1024
 FORMAT = "utf-8"
 
@@ -12,14 +12,18 @@ def main():
     server = server.sockopt(socket.SOL_SOCKET, 25, 'wlan0')
     server.bind(ADDR)
     server.listen()
-    print(f"[LISTENING] Server is listening on {IP}")
-    while True:
-        conn, addr = server.accept()
-        print(f"[NEW CONNECTION] {addr} connected.")
-        msg = conn.recv(SIZE).decode(FORMAT)
-        print(f"[{addr}] {msg}")
-        conn.send("Msg received".encode(FORMAT))
-        conn.close()
+    print(f"[LISTENING] Server is listening on 192.168.43.200")
+    
+    conn, addr = server.accept()
+    print(f"[NEW CONNECTION] {addr} connected.")
+    filename = conn.recv(SIZE).decode(FORMAT)
+    file = open(filename, "wb")
+    conn.send("Filename received".encode(FORMAT))
+    data = conn.recv(SIZE).decode(FORMAT)
+    file.write(data)
+    file.close()
+    print(f"[{addr}] {data}")
+    conn.close()
     
 if __name__ == "__main__":
     main()

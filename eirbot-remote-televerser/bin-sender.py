@@ -1,7 +1,7 @@
 import socket
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 4455
+PORT = 4456
 ADDR = (IP, PORT)
 SIZE = 1024
 FORMAT = "utf-8"
@@ -15,7 +15,7 @@ def main():
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client.connect(ADDR)
         print(f"[NEW CONNECTION] {ADDR} connected.")
-        file = open("test-uart.bin", "rb")
+        file = open("test.txt", "rb")
         data = file.read()
         client.send(data)
         print(f"[{ADDR}] {data}")
