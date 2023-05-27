@@ -9,9 +9,12 @@ def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
     print(f"[NEW CONNECTION] {ADDR} connected.")
-    file = open("test.txt", "rb")
+    file = open("test-uart.bin", "rb")
     data = file.read()
-    client.send(data)
+    while data:
+        client.send(data)
+        data = file.read(SIZE)
+        
     print(f"[{ADDR}] {data}")
     client.close()
         
