@@ -15,11 +15,8 @@ def copy_file_to_usb(usb_path, file_pattern, destination_path):
 
     # Display a list of files found on the USB and allow the user to select one
     print("USB files:")
-    for i, file in enumerate(usb_files):
-        print(f"{i + 1}. {file}")
 
-    selection = int(input("Enter the number of the file you want to copy: ")) - 1
-    selected_file = usb_files[selection]
+    selected_file = usb_files[0]
 
     # Copy the file to the destination
     shutil.copy(selected_file, destination_path)
